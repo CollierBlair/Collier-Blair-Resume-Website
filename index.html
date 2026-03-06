@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collier Blair</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #F4F6F9;
+      --surface:       #FFFFFF;
+      --border:        #E4E8EF;
+      --text:          #1A1D23;
+      --muted:         #6B7280;
+      --accent:        #2563EB;
+      --accent-bg:     #EFF6FF;
+      --accent-hover:  #1D4ED8;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+      --shadow-md:     0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05);
+      --radius:        12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.75rem 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    /* Photo */
+    .photo-ring {
+      flex-shrink: 0;
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--accent) 0%, #60A5FA 100%);
+    }
+
+    .photo-ring img,
+    .photo-initials {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* Name & meta */
+    .header-meta { flex: 1; }
+
+    .header-meta h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .header-meta .tagline {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 0.65rem;
+    }
+
+    .contact-row a,
+    .contact-row span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.15s;
+    }
+
+    .contact-row a:hover { color: var(--accent); }
+
+    .contact-icon {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── TAB NAV ── */
+    .tab-nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 0.8rem 1.1rem;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: -1px; /* overlap header border */
+    }
+
+    .tab-btn:hover { color: var(--text); }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: panelIn 0.28s ease both;
+    }
+
+    .tab-panel.leaving {
+      display: block;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      animation: panelOut 0.18s ease both;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes panelOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-8px); }
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card-role {
+      font-size: 0.875rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 0.15rem;
+    }
+
+    .card-date {
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.22rem 0.65rem;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      margin-top: 0.85rem;
+    }
+
+    .card-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .card-body ul li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.55;
+    }
+
+    .card-body ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+      top: 0.08em;
+    }
+
+    .card-body p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* GPA chip */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+      margin-top: 0.65rem;
+    }
+
+    /* ── SKILLS ── */
+    .skill-group {
+      margin-bottom: 1.6rem;
+    }
+
+    .skill-group-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.65rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.32rem 0.8rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tag:hover {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .tag::after {
+      content: ' ↗';
+      font-size: 0.7rem;
+      opacity: 0.5;
+    }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: backdropIn 0.2s ease both;
+    }
+
+    @keyframes backdropIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      max-width: 520px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.88) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    .modal-category {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 1rem;
+    }
+
+    .modal-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .modal-body {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .modal-body .course-group { margin-bottom: 1.25rem; }
+    .modal-body .course-group:last-child { margin-bottom: 0; }
+    .modal-body .course-group-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .modal-body .course-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .modal-body .course-list li {
+      font-size: 0.85rem;
+      color: var(--text);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.4;
+    }
+    .modal-body .course-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 0.1em;
+    }
+    .modal-body .course-list li span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .modal-body .course-list li span:has-text("In Progress") { color: #E87722; }
+    /* highlight In Progress inline */
+    .modal-body .course-list li span em {
+      color: #E87722;
+      font-style: normal;
+      font-weight: 600;
+    }
+    .modal-body .edu-achievements {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-body .edu-achievement-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex: 1;
+      min-width: 160px;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid;
+    }
+
+    .modal-body .edu-achievement-badge.gold {
+      background: #FFFBEB;
+      border-color: #FCD34D;
+    }
+
+    .modal-body .edu-achievement-badge.blue {
+      background: #EFF6FF;
+      border-color: #93C5FD;
+    }
+
+    .modal-body .badge-icon {
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .modal-body .edu-achievement-badge.gold .badge-icon { color: #D97706; }
+    .modal-body .edu-achievement-badge.blue  .badge-icon { color: #2563EB; font-size: 1.1rem; }
+
+    .modal-body .badge-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .modal-body .edu-achievement-badge.gold .badge-title { color: #92400E; }
+    .modal-body .edu-achievement-badge.blue  .badge-title { color: #1E40AF; }
+
+    .modal-body .badge-sub {
+      font-size: 0.75rem;
+      margin-top: 0.1rem;
+    }
+
+    .modal-body .edu-achievement-badge.gold .badge-sub { color: #B45309; }
+    .modal-body .edu-achievement-badge.blue  .badge-sub { color: #3B82F6; }
+
+    .modal-body .dept-blurb {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── AUBURN EDUCATION THEME ── */
+    #education .section-label { color: #E87722; }
+
+    .auburn-hero {
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .auburn-photo-wrap {
+      position: relative;
+      background: #FFFFFF;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.25rem 2rem;
+      border-top: 5px solid #0C2340;
+      border-bottom: 4px solid #E87722;
+    }
+
+    .auburn-photo-wrap img {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Stats row */
+    .auburn-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: #0C2340;
+    }
+
+    .auburn-stat {
+      padding: 1rem;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .auburn-stat:last-child { border-right: none; }
+
+    .auburn-stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #E87722;
+      line-height: 1;
+    }
+
+    .auburn-stat-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Degree card under hero */
+    .auburn-degree-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid #E87722;
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .auburn-degree-card .degree-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .auburn-degree-card .degree-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* External link button on cards */
+    .card-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.85rem;
+      background: #F0F4FF;
+      color: #1877F2;
+      border: 1px solid #C3D4FB;
+      border-radius: 8px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .card-link-btn:hover {
+      background: #DBEAFF;
+      border-color: #1877F2;
+      transform: translateY(-1px);
+    }
+
+    /* Info button */
+    .btn-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #FEF3E8;
+      color: #C45F00;
+      border: 1px solid #F5C49A;
+      border-radius: 8px;
+      padding: 0.45rem 1rem;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s, color 0.15s;
+    }
+    .btn-info:hover {
+      background: #FDEBD4;
+      border-color: #E87722;
+      color: #E87722;
+      transform: translateY(-1px);
+    }
+
+    /* ── REFERENCES ── */
+    .ref-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .ref-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .ref-avatar {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border);
+    }
+
+    .ref-name { font-size: 0.975rem; font-weight: 600; }
+
+    .ref-title {
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 0.1rem;
+    }
+
+    .ref-company {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .ref-rel {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .ref-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .ref-contacts a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.15s;
+    }
+
+    .ref-contacts a:hover { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 1rem;
+      }
+      .contact-row { justify-content: center; }
+      .card-head { flex-direction: column; }
+      .ref-card { flex-direction: column; align-items: flex-start; }
+      main { padding: 1.25rem 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="photo-ring">
+      <img src="photo.jpg" alt="Collier Blair" />
+    </div>
+
+    <div class="header-meta">
+      <h1>Collier Blair</h1>
+      <p class="tagline">Computer Engineering · Auburn University &nbsp;·&nbsp; Graduation Spring 2026</p>
+      <div class="contact-row">
+        <a href="mailto:1CollierBlair1@gmail.com">
+          <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          1CollierBlair1@gmail.com
+        </a>
+        <a href="tel:2055316157">
+          <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          (205) 531-6157
+        </a>
+        <span>
+          <svg class="contact-icon" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          Auburn, AL
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="experience">Experience</button>
+    <button class="tab-btn" data-tab="education">Education</button>
+    <button class="tab-btn" data-tab="projects">Projects</button>
+    <button class="tab-btn" data-tab="skills">Skills</button>
+    <button class="tab-btn" data-tab="references">References</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience" class="tab-panel active">
+    <p class="section-label">Professional Experience</p>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Asteria Health &mdash; Homewood, AL</div>
+          <div class="card-role">Continuous Improvement Specialist</div>
+        </div>
+        <span class="card-date">05/2025 &ndash; Present</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Managed inventory, maintenance, and vendor relationships for high-precision Stokes tablet presses to ensure consistent equipment uptime and operational efficiency.</li>
+          <li>Executed automation system qualification and troubleshooting for pharmaceutical production lines to maintain FDA compliance and production standards.</li>
+          <li>Operated and validated complex pharmaceutical automation systems, including HMI-controlled weight sorters and cartoning lines, executing qualification protocols to optimize performance for compliant production.</li>
+        </ul>
+        <a class="card-link-btn" href="https://asteriahealth.com/" target="_blank" rel="noopener" style="color:#0F766E;background:#F0FDFA;border-color:#99F6E4;">
+          <svg style="width:13px;height:13px;fill:currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/></svg>
+          Visit asteriahealth.com
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Blair's Tree Service &mdash; Birmingham, AL</div>
+          <div class="card-role">Co-Founder</div>
+        </div>
+        <span class="card-date">01/2022 &ndash; Present</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Co-founded and maintain a fully functioning tree service offering professional-grade trimming, removal, and emergency cleanup.</li>
+        </ul>
+        <a class="card-link-btn" href="https://www.facebook.com/BlairsTreeService/" target="_blank" rel="noopener">
+          <svg style="width:13px;height:13px;fill:currentColor" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          View on Facebook
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Greystone Marketplace &mdash; Birmingham, AL</div>
+          <div class="card-role">Warehouse Manager</div>
+        </div>
+        <span class="card-date">04/2018 &ndash; 06/2020</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Oversaw delivery logistics and warehouse inventory while interfacing with clients to ensure service satisfaction.</li>
+          <li>Performed maintenance and restoration work across store assets.</li>
+        </ul>
+        <a class="card-link-btn" href="https://greystonemarketplace280.com/" target="_blank" rel="noopener" style="color:#7C3AED;background:#F5F3FF;border-color:#DDD6FE;">
+          <svg style="width:13px;height:13px;fill:currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/></svg>
+          Visit greystonemarketplace280.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section id="education" class="tab-panel">
+    <p class="section-label">Education</p>
+
+    <!-- Hero banner -->
+    <div class="auburn-hero">
+      <div class="auburn-photo-wrap">
+        <img src="auburn-logo.png" alt="Auburn University — Samuel Ginn College of Engineering, Electrical and Computer Engineering">
+      </div>
+
+      <div class="auburn-stats">
+        <div class="auburn-stat">
+          <div class="auburn-stat-value">3.64</div>
+          <div class="auburn-stat-label">GPA / 4.0</div>
+        </div>
+        <div class="auburn-stat">
+          <div class="auburn-stat-value">B.S.</div>
+          <div class="auburn-stat-label">Computer Eng.</div>
+        </div>
+        <div class="auburn-stat">
+          <div class="auburn-stat-value">'26</div>
+          <div class="auburn-stat-label">Graduation</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Degree detail card -->
+    <div class="auburn-degree-card">
+      <div class="degree-title">Bachelor of Computer Engineering</div>
+      <div class="degree-sub">Department of Electrical &amp; Computer Engineering &nbsp;&middot;&nbsp; ABET Accredited</div>
+      <button class="btn-info" data-edu="auburn" style="margin-top:1rem;">
+        <svg style="width:13px;height:13px;fill:currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        View Department Info &amp; Full Coursework
+      </button>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects" class="tab-panel">
+    <p class="section-label">Relevant Project Experience</p>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Embedded Systems Programming</div>
+          <div class="card-role">C++ &amp; ARM Assembly · STM32</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p>Developed embedded applications in C++ and ARM assembly using STM32CubeIDE, interfacing with GPIO, timers, sensors, and interrupts for real-world hardware control.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Digital Logic and FPGA Design</div>
+          <div class="card-role">Verilog · Nexys-7 FPGA</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p>Designed and deployed Verilog-based digital systems on the Nexys-7 FPGA, including a fully functional roulette game demonstrating state machine design and timing control.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Real-Time System Control &amp; Data Analysis</div>
+          <div class="card-role">Firmware · STM32 · Interrupt-Driven</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p>Built layered firmware and interrupt-driven STM32 projects, performing real-time data analysis with LED feedback and low-level hardware control.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills" class="tab-panel">
+    <p class="section-label">Technical Skills</p>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Programming Languages</div>
+      <div class="tag-row">
+        <span class="tag" data-skill="python">Python</span>
+        <span class="tag" data-skill="cpp">C++</span>
+        <span class="tag" data-skill="c">C</span>
+        <span class="tag" data-skill="verilog">Verilog</span>
+        <span class="tag" data-skill="matlab">MATLAB</span>
+        <span class="tag" data-skill="arm">ARM Assembly</span>
+        <span class="tag" data-skill="riscv">RISC-V Assembly</span>
+        <span class="tag" data-skill="tensorflow">TensorFlow</span>
+        <span class="tag" data-skill="stm32ide">STM32CubeIDE</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Software &amp; Tools</div>
+      <div class="tag-row">
+        <span class="tag" data-skill="cursor">Cursor</span>
+        <span class="tag" data-skill="vscode">VSCode</span>
+        <span class="tag" data-skill="aiml">AI / ML Platforms</span>
+        <span class="tag" data-skill="multisim">MultiSim</span>
+        <span class="tag" data-skill="ltspice">LTSpice</span>
+        <span class="tag" data-skill="msoffice">Microsoft Office</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Hardware &amp; Systems</div>
+      <div class="tag-row">
+        <span class="tag" data-skill="embedded">Embedded System Design</span>
+        <span class="tag" data-skill="fpga">FPGA Development</span>
+        <span class="tag" data-skill="mcu">Microcontroller Programming</span>
+        <span class="tag" data-skill="circuits">Circuit Design &amp; Analysis</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REFERENCES ── -->
+  <section id="references" class="tab-panel">
+    <p class="section-label">Professional References</p>
+
+    <div class="ref-card">
+      <div class="ref-avatar">CM</div>
+      <div>
+        <div class="ref-name">Chris Musser</div>
+        <div class="ref-title">VP, Operations</div>
+        <div class="ref-company">Asteria Health</div>
+        <p class="ref-rel">Senior executive overseeing operations at Asteria Health; provided organizational leadership during tenure as Continuous Improvement Specialist.</p>
+        <div class="ref-contacts">
+          <a href="tel:2247628243">
+            <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+            (224) 762-8243
+          </a>
+          <a href="mailto:chrismusser@asteriahealth.com">
+            <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+            chrismusser@asteriahealth.com
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-card">
+      <div class="ref-avatar">JG</div>
+      <div>
+        <div class="ref-name">Jody Grooms</div>
+        <div class="ref-title">Pharmaceutical Executive &amp; Strategic Leadership Consultant</div>
+        <div class="ref-company">Asteria Health</div>
+        <p class="ref-rel">Former supervisor at Asteria Health; pharmacist executive with expertise in operational excellence and business transformation.</p>
+        <div class="ref-contacts">
+          <a href="tel:2058780844">
+            <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+            (205) 878-0844
+          </a>
+          <a href="https://linkedin.com/in/jodygrooms" target="_blank" rel="noopener">
+            <svg class="contact-icon" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd"/></svg>
+            linkedin.com/in/jodygrooms
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-card">
+      <div class="ref-avatar">SW</div>
+      <div>
+        <div class="ref-name">Sheldon Walker</div>
+        <div class="ref-title">Continuous Improvement Specialist, Logistics</div>
+        <div class="ref-company">Asteria Health</div>
+        <p class="ref-rel">Direct supervisor at Asteria Health; oversaw day-to-day continuous improvement operations within the logistics department.</p>
+        <div class="ref-contacts">
+          <a href="tel:2623749405">
+            <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+            (262) 374-9405
+          </a>
+          <a href="mailto:sheldonwalker@asteriahealth.com">
+            <svg class="contact-icon" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+            sheldonwalker@asteriahealth.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── SKILL MODAL ── -->
+<div class="modal-backdrop" id="skillModal">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+    <div class="modal-category" id="modalCategory"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  // ── SKILL DATA ──
+  const skills = {
+    python: {
+      category: 'Programming Language',
+      title: 'Python',
+      body: `Python is a versatile, high-level language that's practical across computer and electrical engineering. It's widely used for data analysis, automation scripts, signal processing, and machine learning pipelines. In engineering contexts, Python shines for rapid prototyping — you can process sensor data, plot results, and interface with hardware through libraries like NumPy, Pandas, and PySerial without the overhead of lower-level languages.`
+    },
+    cpp: {
+      category: 'Programming Language',
+      title: 'C++',
+      body: `C++ is the go-to language for embedded systems and performance-critical applications. It gives fine-grained control over hardware while supporting object-oriented design, making it ideal for firmware development. Used extensively in STM32 microcontroller projects — writing drivers, managing peripherals like GPIO and timers, and building real-time applications that have strict timing and memory constraints.`
+    },
+    c: {
+      category: 'Programming Language',
+      title: 'C',
+      body: `C is the foundational language of systems programming, sitting just one layer above assembly. It's essential for writing efficient, portable firmware and is the backbone of most operating systems and bare-metal embedded development. C provides direct memory access and low-level hardware manipulation — skills that are critical when programming microcontrollers where every byte and clock cycle matters.`
+    },
+    verilog: {
+      category: 'Programming Language',
+      title: 'Verilog',
+      body: `Verilog is a Hardware Description Language (HDL) — instead of writing software, you describe the actual behavior of hardware logic. It's used to design and simulate digital circuits before deploying them to FPGAs. Applied in coursework to build state machines, arithmetic units, and complete digital systems on the Nexys-7 FPGA board, including a fully functional roulette game from the ground up.`
+    },
+    matlab: {
+      category: 'Programming Language',
+      title: 'MATLAB',
+      body: `MATLAB is a high-level mathematical computing environment widely used in engineering. It's ideal for signal processing, control systems design, matrix operations, and modeling dynamic systems. Used throughout coursework for analyzing circuit behavior, designing digital filters, performing Fourier transforms, and simulating system responses — tasks that are central to both computer and electrical engineering.`
+    },
+    arm: {
+      category: 'Programming Language',
+      title: 'ARM Assembly',
+      body: `ARM Assembly is the low-level instruction set for ARM-based processors — the same family used in STM32 microcontrollers. Writing in assembly gives direct control over CPU registers, memory addresses, and precise timing. Used in embedded systems projects for performance-critical routines and to develop a deep understanding of how the processor actually executes instructions, handles interrupts, and manages the hardware stack.`
+    },
+    riscv: {
+      category: 'Programming Language',
+      title: 'RISC-V Assembly',
+      body: `RISC-V is an open-source instruction set architecture used in computer architecture and organization coursework. Programming at the assembly level in RISC-V builds foundational knowledge of how a processor fetches, decodes, and executes instructions — including how memory is managed, how function calls work at the register level, and how hardware and software truly interact at the lowest level.`
+    },
+    tensorflow: {
+      category: 'Programming Language / Framework',
+      title: 'TensorFlow',
+      body: `TensorFlow is Google's open-source machine learning framework for building, training, and deploying neural networks. Used in AI/ML coursework and projects for building classification models, working with datasets, and training predictive systems. As AI becomes increasingly integrated into embedded and engineering applications, TensorFlow provides the tools to develop intelligent, data-driven solutions.`
+    },
+    stm32ide: {
+      category: 'Development Environment',
+      title: 'STM32CubeIDE',
+      body: `STM32CubeIDE is the official all-in-one development environment for STM32 microcontrollers. It bundles code editing, compilation, hardware configuration (via CubeMX), and a full real-time debugger — allowing you to set breakpoints, inspect registers, and step through firmware running on actual hardware. This was the primary IDE for all embedded systems projects, from GPIO blinking to complex interrupt-driven firmware.`
+    },
+    cursor: {
+      category: 'Software Tool',
+      title: 'Cursor',
+      body: `Cursor is an AI-powered code editor built on top of VSCode that integrates large language models directly into the development workflow. It offers intelligent code completion, natural language code generation, and context-aware refactoring — significantly accelerating development speed. Useful for quickly scaffolding projects, understanding unfamiliar codebases, and iterating on complex logic across multiple files.`
+    },
+    vscode: {
+      category: 'Software Tool',
+      title: 'VSCode',
+      body: `Visual Studio Code is a lightweight yet powerful code editor by Microsoft, supporting virtually every programming language through extensions. It serves as a primary development environment for general software projects, offering integrated Git, a built-in terminal, debugging tools, and a massive extension ecosystem. Reliable across every type of project — from Python scripts to web development to firmware.`
+    },
+    aiml: {
+      category: 'Software Tool',
+      title: 'AI / ML Platforms',
+      body: `Experience with a range of AI and machine learning platforms — including cloud-based tools and local frameworks — for training models, processing large datasets, and deploying intelligent systems. Applied in both academic and practical engineering contexts for automation, pattern recognition, and data-driven problem solving. Includes working with tools like Google Colab, Jupyter, and model deployment pipelines.`
+    },
+    multisim: {
+      category: 'Software Tool',
+      title: 'MultiSim',
+      body: `MultiSim is a circuit simulation and design tool by NI (National Instruments) used to design and test electronic circuits before ever building them physically. It allows you to place components, wire schematics, and simulate behavior — measuring voltages, currents, and frequency responses in a virtual environment. Used extensively in circuits coursework for designing and verifying both analog and digital circuits.`
+    },
+    ltspice: {
+      category: 'Software Tool',
+      title: 'LTSpice',
+      body: `LTSpice is an industry-standard SPICE simulator for analog and mixed-signal circuit analysis. Used by engineers worldwide to simulate circuit behavior, analyze AC/DC frequency response, and validate designs for real-world performance. Applied in coursework for power electronics, op-amp circuit design, filter analysis, and simulating transistor-level circuits before physical implementation.`
+    },
+    msoffice: {
+      category: 'Software Tool',
+      title: 'Microsoft Office',
+      body: `Proficiency across the Microsoft Office suite — Excel for engineering calculations, data analysis, and creating organized reports; Word for technical documentation and lab write-ups; and PowerPoint for professional presentations of projects and findings. These tools are essential for communicating technical work clearly in both academic and professional environments.`
+    },
+    embedded: {
+      category: 'Hardware & Systems',
+      title: 'Embedded System Design',
+      body: `Embedded system design is the process of building computing systems integrated into larger devices to perform dedicated, real-time functions. It involves hardware/software co-design, managing tight resource constraints (memory, power, timing), configuring peripherals, and writing firmware that responds reliably to real-world inputs. Applied in STM32 projects to build complete systems that read sensor data, process it in real-time, and drive physical outputs.`
+    },
+    fpga: {
+      category: 'Hardware & Systems',
+      title: 'FPGA Development',
+      body: `Field-Programmable Gate Array (FPGA) development involves programming reconfigurable hardware chips using Hardware Description Languages like Verilog. Unlike software running on a CPU, FPGA logic executes in true hardware parallelism — making it extremely fast and deterministic. Experience includes designing and deploying digital systems on the Nexys-7 FPGA board, from combinational logic to complex state-machine-based applications.`
+    },
+    mcu: {
+      category: 'Hardware & Systems',
+      title: 'Microcontroller Programming',
+      body: `Microcontroller programming involves writing firmware for small, self-contained processors designed to control hardware in real-time. This includes configuring clocks and peripherals, writing interrupt service routines, managing timers, and optimizing code for constrained resources. Primary experience with the STM32 ARM Cortex-M family — programming everything from GPIO pin control to multi-interrupt firmware architectures using STM32CubeIDE.`
+    },
+    circuits: {
+      category: 'Hardware & Systems',
+      title: 'Circuit Design & Analysis',
+      body: `Circuit design and analysis covers the full lifecycle of electronic circuit creation — from schematic design and component selection to simulation and physical testing. Includes both analog circuits (amplifiers, filters, power supplies, op-amp configurations) and digital circuits (logic gates, flip-flops, counters, decoders). Tools like MultiSim and LTSpice are used to simulate and verify designs before breadboarding or PCB implementation.`
+    }
+  };
+
+  // ── EDUCATION DATA ──
+  const eduData = {
+    auburn: {
+      category: 'Auburn University — Samuel Ginn College of Engineering',
+      title: 'Electrical & Computer Engineering',
+      html: `
+        <div class="edu-achievements">
+          <div class="edu-achievement-badge gold">
+            <span class="badge-icon">★</span>
+            <div>
+              <div class="badge-title">Dean's List</div>
+              <div class="badge-sub">Fall 2023 &amp; Fall 2025</div>
+            </div>
+          </div>
+          <div class="edu-achievement-badge blue">
+            <span class="badge-icon">4.0</span>
+            <div>
+              <div class="badge-title">Perfect GPA</div>
+              <div class="badge-sub">Final year of coursework</div>
+            </div>
+          </div>
+        </div>
+        <p class="dept-blurb">
+          Auburn's Department of Electrical and Computer Engineering (ECE) is one of the largest and most respected programs in the Southeast. The Computer Engineering track bridges software and hardware — training graduates to design systems at every level of the stack, from transistor-level circuits and FPGA logic all the way up to firmware, operating systems, and AI-driven applications. ABET-accredited.
+        </p>
+        <div class="course-group">
+          <div class="course-group-title">Mathematics & Sciences</div>
+          <ul class="course-list">
+            <li>Calculus I <span>— MATH 1610</span></li>
+            <li>Calculus II <span>— MATH 1620</span></li>
+            <li>Calculus III <span>— MATH 2630</span></li>
+            <li>Topics in Linear Algebra <span>— MATH 2660</span></li>
+            <li>Linear Differential Equations <span>— MATH 2650</span></li>
+            <li>Stats for Engineers & Scientists <span>— STAT 3010</span></li>
+            <li>Engineering Physics I & II <span>— PHYS 1600 / 1610</span></li>
+          </ul>
+        </div>
+        <div class="course-group">
+          <div class="course-group-title">Electrical Engineering</div>
+          <ul class="course-list">
+            <li>Electric Circuit Analysis <span>— ELEC 2110</span></li>
+            <li>Digital Logic Circuits <span>— ELEC 2200</span></li>
+            <li>Signals and Systems <span>— ELEC 2120</span></li>
+            <li>Digital Electronics <span>— ELEC 2210</span></li>
+            <li>Computer Systems <span>— ELEC 2220</span></li>
+            <li>Random Signals and Systems <span>— ELEC 3800</span></li>
+            <li>Digital Integrated Circuits <span>— ELEC 5250</span></li>
+            <li>Info Networks and Technology <span>— ELEC 5220</span></li>
+          </ul>
+        </div>
+        <div class="course-group">
+          <div class="course-group-title">Embedded Systems & Hardware</div>
+          <ul class="course-list">
+            <li>Embedded System Design Lab <span>— ELEC 3050</span></li>
+            <li>Digital System Design (FPGA) <span>— ELEC 4200</span></li>
+            <li>Computer Architecture and Design <span>— ELEC 5200</span></li>
+            <li>Capstone Design I <span>— ELEC 4010</span></li>
+            <li>Capstone Design II <span>— ELEC 4020 · In Progress</span></li>
+          </ul>
+        </div>
+        <div class="course-group">
+          <div class="course-group-title">Software & Computing</div>
+          <ul class="course-list">
+            <li>Fundamentals of Computing I & II <span>— COMP 1210 / 2210</span></li>
+            <li>Software Construction <span>— COMP 2710</span></li>
+            <li>Discrete Structures <span>— COMP 2240</span></li>
+            <li>Introduction to Operating Systems <span>— COMP 3500</span></li>
+            <li>Introduction to Algorithms <span>— COMP 3270</span></li>
+            <li>Engineering Economy <span>— INSY 3600 · In Progress</span></li>
+          </ul>
+        </div>
+        <div class="course-group">
+          <div class="course-group-title">AI & Advanced (In Progress — Spring 2026)</div>
+          <ul class="course-list">
+            <li>Artificial Intelligence <span>— COMP 5600</span></li>
+            <li>Data Mining <span>— COMP 5130</span></li>
+            <li>AI & Neuromorphic Hardware <span>— ELEC 5970</span></li>
+          </ul>
+        </div>
+      `
+    }
+  };
+
+  // ── MODAL LOGIC ──
+  const backdrop   = document.getElementById('skillModal');
+  const modalClose = document.getElementById('modalClose');
+  const modalCat   = document.getElementById('modalCategory');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody  = document.getElementById('modalBody');
+
+  function openModal(key, isEdu = false) {
+    const data = isEdu ? eduData[key] : skills[key];
+    if (!data) return;
+    modalCat.textContent  = data.category;
+    modalTitle.textContent = data.title;
+    if (isEdu) {
+      modalBody.innerHTML = data.html;
+    } else {
+      modalBody.textContent = data.body;
+    }
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  document.querySelectorAll('.tag[data-skill]').forEach(tag => {
+    tag.addEventListener('click', () => openModal(tag.dataset.skill));
+  });
+
+  document.querySelectorAll('.btn-info[data-edu]').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.edu, true));
+  });
+
+  // ── TAB LOGIC ──
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels  = document.querySelectorAll('.tab-panel');
+  let current   = document.querySelector('.tab-panel.active');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.tab;
+      const next     = document.getElementById(targetId);
+
+      if (next === current) return;
+
+      // Update button state
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Capture leaving panel before reassigning current
+      const leaving = current;
+      current = next;
+
+      // Animate out leaving panel
+      leaving.classList.remove('active');
+      leaving.classList.add('leaving');
+
+      leaving.addEventListener('animationend', () => {
+        leaving.classList.remove('leaving');
+      }, { once: true });
+
+      // Animate in next panel
+      next.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
